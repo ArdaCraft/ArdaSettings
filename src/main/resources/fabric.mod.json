@@ -3,15 +3,14 @@
 	"id": "ardasettings",
 	"version": "${version}",
 	"name": "ArdaSettings",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "A basic mod that checks the allocated Ram for the Ardacraft Modpack",
 	"authors": [
-		"Me!"
+		"Speklapje300"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://ardacraft.me/"
 	},
-	"license": "CC0-1.0",
+	"license": "All Rights Reserved",
 	"icon": "assets/ardasettings/icon.png",
 	"environment": "*",
 	"entrypoints": {
