@@ -35,12 +35,14 @@ public class PreLaunchCheck {
     }
 
     public static void checkAllocatedRam(){
-        Specs minSpecs = new Specs(4, 8000, 4096);
+        Specs minSpecs = new Specs(4, 8888, 4096);
         long allocatedMB = Runtime.getRuntime().maxMemory() / (1024 * 1024);
         if (allocatedMB < minSpecs.RamMB){
             ArdaSettings.LOGGER.info("RAM allocated is not sufficient to run Ardacraft.");
-            popUpScreen("Your Minecraft instance has less then 8GB of memory allocated. ArdaC   raft needs at least 8GB allocated to function. \nPlease allocate at least 8GB of memory. \nIf you are unsure on how to do this, please check the instructions at: https://www.ardacraft.me/join");
-            System.exit(0);
+//            popUpScreen("Your Minecraft instance has less then 8GB of memory allocated. ArdaC   raft needs at least 8GB allocated to function. \nPlease allocate at least 8GB of memory. \nIf you are unsure on how to do this, please check the instructions at: https://www.ardacraft.me/join");
+//            System.exit(0);
+            PanelDialog.showAllocatedRamDialog();
+
         }
     }
 }
