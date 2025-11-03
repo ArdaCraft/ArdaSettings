@@ -24,7 +24,6 @@ public class PanelDialog {
         panel.setBorder(BorderFactory.createEmptyBorder(15,15,15,15));
 
 
-
         URL url = PanelDialog.class.getResource("/assets/ardasettings/icon.png");
         ImageIcon icon = null;
 
@@ -107,6 +106,8 @@ public class PanelDialog {
 
 
     }
+
+
     private static Image getScaledImage(Image srcImg, int targetWidth) {
         int originalWidth = srcImg.getWidth(null);
         int originalHeight = srcImg.getHeight(null);
