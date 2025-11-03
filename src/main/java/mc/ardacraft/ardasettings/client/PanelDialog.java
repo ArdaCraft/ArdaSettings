@@ -41,7 +41,7 @@ public class PanelDialog {
 
 
         JPanel messagePanel = new JPanel();
-        messagePanel.setBackground(Color.WHITE);
+
         messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.Y_AXIS));
 
         JLabel title = new JLabel("⚠ Performance Warning");
@@ -111,10 +111,8 @@ public class PanelDialog {
         int originalWidth = srcImg.getWidth(null);
         int originalHeight = srcImg.getHeight(null);
 
-        // Bereken target height met aspect ratio
         int targetHeight = (int) ((double) originalHeight / originalWidth * targetWidth);
 
-        // Als de schaal meer dan 2x is, doe dan incremental scaling
         if (originalWidth > targetWidth * 2) {
             int w = originalWidth;
             int h = originalHeight;
@@ -124,7 +122,6 @@ public class PanelDialog {
             g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
             g2.drawImage(srcImg, 0, 0, w, h, null);
 
-            // Scale down in steps
             while (w > targetWidth || h > targetHeight) {
                 w = Math.max(targetWidth, w / 2);
                 h = Math.max(targetHeight, h / 2);
@@ -140,7 +137,6 @@ public class PanelDialog {
             return tmp;
         }
 
-        // Voor kleinere scaling, gebruik gewoon high-quality rendering
         BufferedImage resized = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = resized.createGraphics();
         g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
