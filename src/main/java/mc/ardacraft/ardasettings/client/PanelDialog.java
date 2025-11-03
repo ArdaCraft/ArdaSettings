@@ -15,51 +15,50 @@ public class PanelDialog {
 
         JDialog dialog = new JDialog((Frame) null, "Performance Warning", true);
         dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        dialog.setLayout(new BorderLayout(10,10));
+        dialog.setLayout(new BorderLayout(15,15));
+        dialog.setResizable(false);
 
         JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-
-//        Could not get this looking decently
-//
-//        URL url = PanelDialog.class.getResource("/assets/ardasettings/icon.png");
-//        ImageIcon icon = null;
-//
-//        if (url != null){
-//            Image rawImage = new ImageIcon(url).getImage();
-//
-//            int targetWidth = 128;
-//            int targetHeight = -1;
-//            Image scaledImage = rawImage.getScaledInstance(targetWidth, targetHeight, Image.SCALE_SMOOTH);
-//
-//            icon = new ImageIcon(scaledImage);
-//        }
-//
-//        if (icon != null){
-//            JLabel imageLabel = new JLabel(icon);
-//            imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-//            panel.add(imageLabel);
-//        }
+        panel.setLayout(new BorderLayout(10,10));
+        panel.setBorder(BorderFactory.createEmptyBorder(15,15,15,15));
 
 
-        panel.add(Box.createVerticalStrut(8));
+
+        URL url = PanelDialog.class.getResource("/assets/ardasettings/icon.png");
+        ImageIcon icon = null;
+
+        if (url != null){
+            Image rawImage = new ImageIcon(url).getImage();
+
+            int targetWidth = 128;
+            int targetHeight = -1;
+            Image scaledImage = rawImage.getScaledInstance(targetWidth, targetHeight, Image.SCALE_SMOOTH);
+
+            icon = new ImageIcon(scaledImage);
+        }
+
+        if (icon != null){
+            JLabel imageLabel = new JLabel(icon);
+            panel.add(imageLabel, BorderLayout.WEST);
+        }
+
+
+        JPanel messagePanel = new JPanel();
+        messagePanel.setBackground(Color.WHITE);
+        messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.Y_AXIS));
 
         JLabel title = new JLabel("⚠ Performance Warning");
         title.setFont(title.getFont().deriveFont(Font.BOLD, 18f));
-        title.setAlignmentX(Component.LEFT_ALIGNMENT);
-        panel.add(title);
+        messagePanel.add(title);
+        messagePanel.add(Box.createVerticalStrut(5));
 
-        JLabel text = new JLabel("<html>You have less then <b> 8 GB</b> of memory allocated.<br>"
-                + "ArdaCraft <b>needs</b> at least <b>8 GB</b> to function properly!</html>");
-        text.setAlignmentX(Component.LEFT_ALIGNMENT);
-        panel.add(text);
-
-
+        JLabel text = new JLabel("<html>You have less then <b> 8192 MB</b> of memory allocated.<br>"
+                + "ArdaCraft <b>needs</b> at least <b>8192 MB</b> to function properly!</html>");
+        messagePanel.add(text);
 
         JLabel link = new JLabel("<html><a href=''>View the guide on how to increase allocated memory here.</a></html>");
         link.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        link.setAlignmentX(Component.LEFT_ALIGNMENT);
+
         link.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -68,22 +67,18 @@ public class PanelDialog {
                 } catch (Exception ignored) {}
             }
         });
-        panel.add(link);
+        messagePanel.add(link);
+        messagePanel.add(Box.createVerticalStrut(10));
 
-        panel.add(Box.createVerticalStrut(10));
-
-        JLabel warning = new JLabel("<html> If you continue without allocating at least 8GB of memory you <b>will </b>run into issues.<br>" +
+        JLabel warning = new JLabel("<html> If you continue without allocating at least 8192 MB of memory you <b>will </b>run into issues.<br>" +
                 "We cannot provide support for you if you have not allocated the correct amount of memory.</html>");
-        warning.setAlignmentX(Component.LEFT_ALIGNMENT);
-        panel.add(warning);
-
-
-
-        panel.add(Box.createVerticalStrut(10));
+        messagePanel.add(warning);
+        messagePanel.add(Box.createVerticalStrut(10));
 
         JCheckBox confirmBox = new JCheckBox("I understand the risk and want to continue anyway.");
-        confirmBox.setAlignmentX(Component.LEFT_ALIGNMENT);
-        panel.add(confirmBox);
+        messagePanel.add(confirmBox);
+
+        panel.add(messagePanel, BorderLayout.CENTER);
 
         dialog.add(panel, BorderLayout.CENTER);
 
