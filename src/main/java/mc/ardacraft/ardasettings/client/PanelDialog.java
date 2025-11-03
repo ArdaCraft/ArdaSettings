@@ -59,7 +59,7 @@ public class PanelDialog {
             @Override
             public void mouseClicked(MouseEvent e) {
                 try {
-                    Desktop.getDesktop().browse(new URI("https://ardacraft.me/join"));
+                    Desktop.getDesktop().browse(new URI("https://www.ardacraft.me/resources/guide-to-allocating-more-memory"));
                 } catch (Exception ignored) {}
             }
         });
