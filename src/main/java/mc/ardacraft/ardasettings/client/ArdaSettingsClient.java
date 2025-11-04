@@ -9,11 +9,11 @@ import java.lang.reflect.InvocationTargetException;
 public class ArdaSettingsClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        if (System.getProperty("os.name").toLowerCase().contains("mac")){
-            ClientLifecycleEvents.CLIENT_STARTED.register(client -> {
-                PreLaunchCheck.checkAllocatedRam();
-
-            });
-        }
+//        if (System.getProperty("os.name").toLowerCase().contains("mac")){
+//            ClientLifecycleEvents.CLIENT_STARTED.register(client -> {
+//                PreLaunchCheck.checkAllocatedRam();
+//
+//            });
+//        }
     }
 }
