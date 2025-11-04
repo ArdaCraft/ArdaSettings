@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.net.URL;
@@ -14,7 +16,17 @@ public class PanelDialog {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         }catch (Exception ignored) {}
 
-        JDialog dialog = new JDialog((Frame) null, "Performance Warning", true);
+        JFrame taskbarFrame = new JFrame();
+        taskbarFrame.setUndecorated(true);
+        taskbarFrame.setType(Window.Type.NORMAL);
+        taskbarFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        taskbarFrame.setIconImage(Toolkit.getDefaultToolkit().getImage(
+                PanelDialog.class.getResource("/assets/ardasettings/icon.png")));
+        taskbarFrame.setSize(0, 0);
+        taskbarFrame.setLocation(-10000, -10000); // move it offscreen
+        taskbarFrame.setVisible(true); // must be visible for taskbar entry
+
+        JDialog dialog = new JDialog(taskbarFrame, "Performance Warning", true);
         dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         dialog.setLayout(new BorderLayout(15,15));
         dialog.setResizable(false);
@@ -44,15 +56,15 @@ public class PanelDialog {
         messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.Y_AXIS));
 
         JLabel title = new JLabel("⚠ Performance Warning");
-        title.setFont(title.getFont().deriveFont(Font.BOLD, 18f));
+        title.setFont(title.getFont().deriveFont(Font.BOLD, 20f));
         messagePanel.add(title);
         messagePanel.add(Box.createVerticalStrut(5));
 
-        JLabel text = new JLabel("<html>You have less then <b> 8192 MB</b> of memory allocated.<br>"
-                + "ArdaCraft <b>needs</b> at least <b>8192 MB</b> to function properly!</html>");
+        JLabel text = new JLabel("<html><body style='font-size:11px;'>You have less then <b> 8192 MB</b> of memory allocated.<br>"
+                + "ArdaCraft <b>needs</b> at least <b>8192 MB</b> to function properly!</body></html>");
         messagePanel.add(text);
 
-        JLabel link = new JLabel("<html><a href=''>View the guide on how to increase allocated memory here.</a></html>");
+        JLabel link = new JLabel("<html><a style='font-size:11px;' href=''>View the guide on how to increase allocated memory here.</a></html>");
         link.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         link.addMouseListener(new MouseAdapter() {
@@ -66,12 +78,13 @@ public class PanelDialog {
         messagePanel.add(link);
         messagePanel.add(Box.createVerticalStrut(10));
 
-        JLabel warning = new JLabel("<html> If you continue without allocating at least 8192 MB of memory you <b>will </b>run into issues.<br>" +
-                "We cannot provide support for you if you have not allocated the correct amount of memory.</html>");
+        JLabel warning = new JLabel("<html> <body style='font-size:11px;'>If you continue without allocating at least 8192 MB of memory you <b>will </b>run into issues.<br>" +
+                "We cannot provide support for you if you have not allocated the correct amount of memory.</body></html>");
         messagePanel.add(warning);
         messagePanel.add(Box.createVerticalStrut(10));
 
         JCheckBox confirmBox = new JCheckBox("I understand the risk and want to continue anyway.");
+        confirmBox.setFont(confirmBox.getFont().deriveFont(Font.PLAIN, 13f));
         messagePanel.add(confirmBox);
 
         panel.add(messagePanel, BorderLayout.CENTER);
@@ -99,11 +112,28 @@ public class PanelDialog {
 
         confirmBox.addItemListener(e -> continueButton.setEnabled(confirmBox.isSelected()));
 
+
         dialog.pack();
         dialog.setLocationRelativeTo(null);
         dialog.setResizable(false);
         dialog.setVisible(true);
+        dialog.toFront();
+        dialog.requestFocus();
 
+        dialog.setType(Window.Type.NORMAL);
+        dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+        dialog.setAlwaysOnTop(true);
+
+        dialog.setFocusableWindowState(true);
+        dialog.setFocusable(true);
+
+
+        dialog.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                taskbarFrame.dispose();
+            }
+        });
 
     }
 
