@@ -6,6 +6,9 @@ import net.fabricmc.loader.api.entrypoint.PreLaunchEntrypoint;
 public class ArdaSettingsPrelaunch  implements PreLaunchEntrypoint {
     @Override
     public void onPreLaunch(){
-        PreLaunchCheck.checkAllocatedRam();
+        if (!System.getProperty("os.name").toLowerCase().contains("mac")){
+            PreLaunchCheck.checkAllocatedRam();
+        }
+
     }
 }

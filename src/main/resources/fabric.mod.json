@@ -19,8 +19,11 @@
 		],
         "preLaunch": [
             "mc.ardacraft.ardasettings.ArdaSettingsPrelaunch"
-        ]
-	},
+        ],
+      "client": [
+        "mc.ardacraft.ardasettings.client.ArdaSettingsClient"
+      ]
+    },
 	"mixins": [
 		"ardasettings.mixins.json"
 	],
